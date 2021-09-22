@@ -17,19 +17,20 @@ def ppt_to_pdf(powerpoint, inputFileName, outputFileName, formatType = 32):
     print('convert %s file complete '%outputFileName)
  
 def convert_files_in_folder(powerpoint, folder):
-    print(folder)
+   #print(folder)
     #time.sleep(10)
     ppt_to_pdf(powerpoint, folder, folder)
  
 if __name__ == "__main__":
     file = sys.argv[1]
     now = sys.argv[2]
-    print(sys.argv)
+    #print(sys.argv)
     file = file.replace("©", " ")
-    print(file)
+    #print(file)
     #time.sleep(10)
     powerpoint = init_powerpoint()
     cwd = os.getcwd() + "\GENERATED_PPTX\\"+ now +"\\"+ file + ".pptx"
-    print("cwd = ", cwd)
+    #print("cwd = ", cwd)
     convert_files_in_folder(powerpoint, cwd)
+    print("PDF OK")
     powerpoint.Quit()
