@@ -18,7 +18,7 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
 keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-buttons = ["получить сертификат"]
+buttons = ["Хочу сертификат"]
 keyboard.add(*buttons)
 
 @dp.message_handler(commands=['start', 'help', 'сертификат'])
@@ -29,7 +29,7 @@ async def send_welcome(message: types.Message):
     await message.reply("Привет, "+ message.from_user.first_name + "!\n👋🏼😀\nЯ Квантоша, бот, созданный для отправки сертификата о посещении дня\
 		открытых дверей\nНапиши мне своё имя и я отправлю тебе твой сертификат", reply_markup=keyboard)
 
-@dp.message_handler(Text(equals="получить сертификат"))
+@dp.message_handler(Text(equals="Хочу сертификат"))
 async def certificate(message: types.Message):
 	await message.answer("Напиши мне свои ФИО", reply_markup=keyboard)
 
