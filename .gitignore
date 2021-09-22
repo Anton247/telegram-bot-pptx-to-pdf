@@ -2,187 +2,193 @@
 # VK_TOKEN и WEATHER_TOKEN
 settings.py
 
+# Базу не выгружаем
+users.db
 
-### Питон ###
-# Байт-скомпилированные / оптимизированные / DLL файлы
-__ тайник__/
-*.py[треска]
+GENERATED_PDF/
+GENERATED_PPTX/
+
+# Created by https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,windows
+# Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode,windows
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
 *$py.class
 
-# Расширения C
-*.итак
+# C extensions
+*.so
 
-# Распространение / упаковка
-.
-Сборка на Python/
-развиваются-яйца/
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
 dist/
-Загрузки/
-яйца/
-.яйца/
-либ/
+downloads/
+eggs/
+.eggs/
+lib/
 lib64/
-части/
+parts/
 sdist/
 var/
-колеса/
-поделиться/python-колеса/
-*.яйцо-информация/
-.установлено.cfg
-*.яйцо
-МАНИФЕСТ
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
 # PyInstaller
-# Обычно эти файлы записываются скриптом python из шаблона
-# до того, как PyInstaller создаст exe-файл, чтобы вставить в него дату/другую информацию.
-*.манифест
-*.спецификация
+# Usually these files are written by a python script from a template
+# before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
 
-# Журналы установщика
+# Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Отчеты о модульном тестировании / охвате
+# Unit test / coverage reports
 htmlcov/
-.токсины/
+.tox/
 .nox/
-.покрытие
-.покрытие.*
-.кэш
+.coverage
+.coverage.*
+.cache
 nosetests.xml
 coverage.xml
-*.обложка
-*.py,обложка
-.гипотеза/
+*.cover
+*.py,cover
+.hypothesis/
 .pytest_cache/
-покрытие/
+cover/
 
-# Переводы
-*.мо
-*.горшок
+# Translations
+*.mo
+*.pot
 
-# Вещи Джанго:
-*.журнал
+# Django stuff:
+*.log
 local_settings.py
 db.sqlite3
-db.sqlite3-журнал
+db.sqlite3-journal
 
-# Материал для колбы:
-экземпляр/
-.webassets-кэш
+# Flask stuff:
+instance/
+.webassets-cache
 
-# Грязная штука:
-.лоскутный
+# Scrapy stuff:
+.scrapy
 
-#
-Документы по документации Сфинкса/_build/
+# Sphinx documentation
+docs/_build/
 
 # PyBuilder
 .pybuilder/
-цель/
+target/
 
-# Записная книжка Jupyter
-.ipynb_ контрольные точки
+# Jupyter Notebook
+.ipynb_checkpoints
 
 # IPython
 profile_default/
 ipython_config.py
 
 # pyenv
-# Для библиотеки или пакета вы можете проигнорировать эти файлы, так как код
-# предназначен для работы в нескольких средах; в противном случае проверьте их в:
-# .python-версия
+# For a library or package, you might want to ignore these files since the code is
+# intended to run in multiple environments; otherwise, check them in:
+# .python-version
 
 # pipenv
-# В соответствии с pypa/pipenv#598 рекомендуется включить файл Pip.блокировка управления версиями.
-# Однако в случае совместной работы, если у вас есть зависимости или зависимости от конкретной платформы
-# не имея кроссплатформенной поддержки, pipenv может устанавливать зависимости, которые не работают или нет
-# установите все необходимые зависимости.
-#Pipfile.замок
+# According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+# However, in case of collaboration, if having platform-specific dependencies or dependencies
+# having no cross-platform support, pipenv may install dependencies that don't work, or not
+# install all needed dependencies.
+#Pipfile.lock
 
-# PEP 582; используется, например github.com/David-OConnor/pyflow
-__пакеты__/
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
 
-# Сельдерей
-с сельдереем-расписание
+# Celery stuff
+celerybeat-schedule
 celerybeat.pid
 
-# SageMath проанализировал файлы
+# SageMath parsed files
 *.sage.py
 
 # Environments
 .env
 .venv
 env/
-венв/
+venv/
 ENV/
-env.бак/
-венв.бак/
+env.bak/
+venv.bak/
 
-# Настройки проекта Spyder
+# Spyder project settings
 .spyderproject
 .spyproject
 
-# Настройки проекта веревки
-.проект веревки
+# Rope project settings
+.ropeproject
 
-# документация
-mkdocs /сайт
+# mkdocs documentation
+/site
 
 # mypy
 .mypy_cache/
 .dmypy.json
 dmypy.json
 
-# Проверка типа костра
-.костер/
+# Pyre type checker
+.pyre/
 
-# анализатор статических типов
-pytype .pytype/
+# pytype static type analyzer
+.pytype/
 
-# Символы отладки Cython
+# Cython debug symbols
 cython_debug/
 
-### Визуальный студиокод ###
+### VisualStudioCode ###
 .vscode/*
-!.vscode/настройки.json
-!.vscode/задачи.json
-!.vscode/запуск.json
-!.vscode/расширения.json
-*.код-рабочее пространство
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
 
-# Локальная история для кода Visual Studio
-.история/
+# Local History for Visual Studio Code
+.history/
 
-### Исправление визуального кодирования ###
-# Игнорировать всю локальную историю файлов
+### VisualStudioCode Patch ###
+# Ignore all local history of files
 .history
 .ionide
 
-### Окна ###
-# Файлы кэша миниатюр Windows
-Большие пальцы.дб
-Thumbs.db:зашифрованные
-пальцы.db
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
 ehthumbs_vista.db
 
-# Файл дампа
+# Dump file
 *.stackdump
 
-# Файл конфигурации папки
+# Folder config file
 [Dd]esktop.ini
 
-# Корзина, используемая в общих файловых ресурсах
-$КОРЗИНА ДЛЯ МУСОРА/
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
 
-# Файлы установщика Windows
+# Windows Installer files
 *.cab
 *.msi
 *.msix
 *.msm
 *.msp
 
-# Ярлыки Windows
+# Windows shortcuts
 *.lnk
-
-# Конец https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,windows
