@@ -47,8 +47,8 @@ async def echo(message: types.Message):
 	check = 1
 	if message.from_user.id not in mess: #Если пользователь не писал сообщения, то добавляем его ID в словарь и присваиваем время
 		mess[message.from_user.id] = datetime.datetime.now()
-	elif (datetime.datetime.now() - mess[message.from_user.id]).total_seconds() < 10: #Ставим ограничения на кол-во сообщений
-		await message.answer('Мне можно писать не чаще чем раз в 10 секунд\nТебе придётся подождать')
+	elif (datetime.datetime.now() - mess[message.from_user.id]).total_seconds() < 15: #Ставим ограничения на кол-во сообщений
+		await message.answer('Мне можно писать не чаще чем раз в 15 секунд\nТебе придётся подождать')
 		check = 0
 	if check:
 		mess[message.from_user.id] = datetime.datetime.now()
