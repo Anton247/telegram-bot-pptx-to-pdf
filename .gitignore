@@ -1,18 +1,187 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
 
-# Other files and folders
-.settings/
+# Создано https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,windows
+# Редактировать по адресу https://www.toptal.com/developers/gitignore?templates=visualstudiocode,python,windows
 
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
+### Питон ###
+# Байт-скомпилированные / оптимизированные / DLL файлы
+__ тайник__/
+*.py[треска]
+*$py.class
 
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+# Расширения C
+*.итак
+
+# Распространение / упаковка
+.
+Сборка на Python/
+развиваются-яйца/
+dist/
+Загрузки/
+яйца/
+.яйца/
+либ/
+lib64/
+части/
+sdist/
+var/
+колеса/
+поделиться/python-колеса/
+*.яйцо-информация/
+.установлено.cfg
+*.яйцо
+МАНИФЕСТ
+
+# PyInstaller
+# Обычно эти файлы записываются скриптом python из шаблона
+# до того, как PyInstaller создаст exe-файл, чтобы вставить в него дату/другую информацию.
+*.манифест
+*.спецификация
+
+# Журналы установщика
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Отчеты о модульном тестировании / охвате
+htmlcov/
+.токсины/
+.nox/
+.покрытие
+.покрытие.*
+.кэш
+nosetests.xml
+coverage.xml
+*.обложка
+*.py,обложка
+.гипотеза/
+.pytest_cache/
+покрытие/
+
+# Переводы
+*.мо
+*.горшок
+
+# Вещи Джанго:
+*.журнал
+local_settings.py
+db.sqlite3
+db.sqlite3-журнал
+
+# Материал для колбы:
+экземпляр/
+.webassets-кэш
+
+# Грязная штука:
+.лоскутный
+
+#
+Документы по документации Сфинкса/_build/
+
+# PyBuilder
+.pybuilder/
+цель/
+
+# Записная книжка Jupyter
+.ipynb_ контрольные точки
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+# Для библиотеки или пакета вы можете проигнорировать эти файлы, так как код
+# предназначен для работы в нескольких средах; в противном случае проверьте их в:
+# .python-версия
+
+# pipenv
+# В соответствии с pypa/pipenv#598 рекомендуется включить файл Pip.блокировка управления версиями.
+# Однако в случае совместной работы, если у вас есть зависимости или зависимости от конкретной платформы
+# не имея кроссплатформенной поддержки, pipenv может устанавливать зависимости, которые не работают или нет
+# установите все необходимые зависимости.
+#Pipfile.замок
+
+# PEP 582; используется, например github.com/David-OConnor/pyflow
+__пакеты__/
+
+# Сельдерей
+с сельдереем-расписание
+celerybeat.pid
+
+# SageMath проанализировал файлы
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+венв/
+ENV/
+env.бак/
+венв.бак/
+
+# Настройки проекта Spyder
+.spyderproject
+.spyproject
+
+# Настройки проекта веревки
+.проект веревки
+
+# документация
+mkdocs /сайт
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Проверка типа костра
+.костер/
+
+# анализатор статических типов
+pytype .pytype/
+
+# Символы отладки Cython
+cython_debug/
+
+### Визуальный студиокод ###
+.vscode/*
+!.vscode/настройки.json
+!.vscode/задачи.json
+!.vscode/запуск.json
+!.vscode/расширения.json
+*.код-рабочее пространство
+
+# Локальная история для кода Visual Studio
+.история/
+
+### Исправление визуального кодирования ###
+# Игнорировать всю локальную историю файлов
+.history
+.ionide
+
+### Окна ###
+# Файлы кэша миниатюр Windows
+Большие пальцы.дб
+Thumbs.db:зашифрованные
+пальцы.db
+ehthumbs_vista.db
+
+# Файл дампа
+*.stackdump
+
+# Файл конфигурации папки
+[Dd]esktop.ini
+
+# Корзина, используемая в общих файловых ресурсах
+$КОРЗИНА ДЛЯ МУСОРА/
+
+# Файлы установщика Windows
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Ярлыки Windows
+*.lnk
+
+# Конец https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,windows
