@@ -1,6 +1,7 @@
+# В файле settings.py хранятся переменные
+# VK_TOKEN и WEATHER_TOKEN
+settings.py
 
-# Создано https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,windows
-# Редактировать по адресу https://www.toptal.com/developers/gitignore?templates=visualstudiocode,python,windows
 
 ### Питон ###
 # Байт-скомпилированные / оптимизированные / DLL файлы
