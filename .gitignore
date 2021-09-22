@@ -8,6 +8,10 @@ users.db
 GENERATED_PDF/
 GENERATED_PPTX/
 
+# PowerPoint временно
+~$*.pptx*
+~$*.ppt*
+
 # Created by https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode,windows
 
