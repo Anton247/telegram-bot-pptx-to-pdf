@@ -1,14 +1,24 @@
-import logging
+import logging  # Логирование 
+# Telegram 
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.dispatcher.filters import Text
+
 import datetime
 from datetime import timedelta
+# генерация уникальных идентификаторов для сертификатов
 import uuid
+
 import os
+# токен для бота в файле settings.py (нужно создать)
 from settings import TOKEN
-from sqlite3.dbapi2 import Cursor
-from PPTX_GENERATOR import PPTX_GENERATOR 
+#
+from PPTX_GENERATOR import PPTX_GENERATOR
+# БД sqlite (рекомендую DB Browser) 
 import sqlite3
+from sqlite3.dbapi2 import Cursor
+
+from string import Template
+
 API_TOKEN = TOKEN
 
 # Configure logging
@@ -18,53 +28,60 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
-mess = {}       #Тут будем считать сообщения через словарь
-mess_time = datetime.date.today()   #Храним сегодняшнюю дату
+mess = {}  #Тут будем хранить время последнего обращения к боту от пользователя
+# так делать плохо и лучше БД использовать, но сейчас пойдёт
 
+# клавиатура из обной кнопки
 keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
 buttons = ["Хочу сертификат"]
 keyboard.add(*buttons)
-last_time = datetime.datetime.now()
-@dp.message_handler(commands=['start', 'help', 'сертификат'])
+
+template_message_start = Template("Привет, $name!\n👋🏼😀\nЯ Квантоша, бот, созданный проектной группой в IT Квантуме, "\
+		"для отправки сертификата о посещении дня открытых дверей\nНапиши мне свои ФИО и я отправлю тебе твой сертификат")
+
+@dp.message_handler(commands=['start', 'help', 'начать', 'сертификат'])
 async def send_welcome(message: types.Message):
-    """
-    This handler will be called when user sends `/start` or `/help` command
-    """
-    await message.reply("Привет, "+ message.from_user.first_name + "!\n👋🏼😀\nЯ Квантоша, бот, созданный для отправки сертификата о посещении дня\
-		открытых дверей\nНапиши мне своё имя и я отправлю тебе твой сертификат", reply_markup=keyboard)
+	message_start = template_message_start.substitute(name=message.from_user.first_name)
+	await message.reply(message_start, reply_markup=keyboard)
+
+# на всякий случай
+@dp.message_handler(Text(equals=['start', 'help', 'начать', 'сертификат']))
+async def send_welcome(message: types.Message):
+	message_start = template_message_start.substitute(name=message.from_user.first_name)
+	await message.reply(message_start, reply_markup=keyboard)
 
 @dp.message_handler(Text(equals="Хочу сертификат"))
 async def certificate(message: types.Message):
 	await message.answer("Напиши мне свои ФИО", reply_markup=keyboard)
 
 @dp.message_handler()
-async def echo(message: types.Message):
-	global mess
-	global mess_time
-	if mess_time != datetime.date.today(): #Если дата не сегодня, сбрасываем все сообщения
-		mess = {}
-		mess_time = datetime.date.today()   #Храним сегодняшнюю дату
-	check = 1
-	if message.from_user.id not in mess: #Если пользователь не писал сообщения, то добавляем его ID в словарь и присваиваем время
+async def main_function(message: types.Message):
+	global mess  # время последнего обращения к боту от пользователя (словарь)
+	
+	#  "генийальный" анти DDoS
+	can_receive_message = 1
+	if message.from_user.id not in mess: #Если пользователь не писал ещё сообщения, то добавляем его ID в словарь и присваиваем время
 		mess[message.from_user.id] = datetime.datetime.now()
-	elif (datetime.datetime.now() - mess[message.from_user.id]).total_seconds() < 15: #Ставим ограничения на кол-во сообщений
-		await message.answer('Мне можно писать не чаще чем раз в 15 секунд\nТебе придётся подождать')
-		check = 0
-	if check:
-		mess[message.from_user.id] = datetime.datetime.now()
+	elif (datetime.datetime.now() - mess[message.from_user.id]).total_seconds() < 15:  # Ставим ограничения на время последовательных сообщений боту
+		await message.answer('Мне можно писать не чаще чем раз в 15 секунд\nಥ_ಥ\nТебе придётся подождать')
+		can_receive_message = 0
+	if can_receive_message:
+		mess[message.from_user.id] = datetime.datetime.now()  # обновляем время последнего обращения от пользователя
 		await message.answer("Твой сертификат создаётся, подожди немного")
-		now = str(datetime.date.today().day)
-		now += "-" + str(datetime.date.today().month)
-		now += "-" + str(datetime.date.today().year)
-		UID = uuid.uuid4().hex #уникальный идентификатор
-		file = PPTX_GENERATOR(message.text, UID, now)
-		file = file.replace(" ", "©")
-		command = "python PPTX_to_PDF.py " + file + " " + now
-		res = os.system(command)  # открываем скрипт для форматирования	
-		file = file.replace("©", " ")
-		doc = open('./GENERATED_PDF/' + now + '/' + file + ".pdf", 'rb')
-		await message.reply_document(doc)
-
+		# формируем дату: дд-мм-гггг
+		today_date = "{:02d}".format(datetime.date.today().day)  # форматирование строки - всегда из двух числе  
+		today_date += "-" + "{:02d}".format(datetime.date.today().month)
+		today_date += "-" + str(datetime.date.today().year)
+		UID = uuid.uuid4().hex #уникальный идентификатор для ID сертификата
+		file = PPTX_GENERATOR(message.text, UID, today_date)  # формирование pptx документа из шаблона (ФИО, ID, дата)
+		# file - ФИО+ID:  Кастрюлев Евлампий Спиридонович_ID 
+		file = file.replace(" ", "©")  # для передачи ФИО через аргументы командной строки, пробелы заменяются на спец.символы, чтобы ФИО было "единым целым"
+		command = "python PPTX_to_PDF.py " + file + " " + today_date  # формирование команды для запуска "отдельного" скрипта 
+		res = os.system(command)  # открываем скрипт для конвертации PPTX в PDF	
+		file = file.replace("©", " ")  # возвращаем пробелы
+		doc = open('./GENERATED_PDF/' + today_date + '/' + file + ".pdf", 'rb')  # берём файл
+		await message.reply_document(doc)  # и отправляем его пользователю
+		# работа с SQLLite
 		connect = sqlite3.connect('users.db')
 		cursor = connect.cursor()
 		cursor.execute("""CREATE TABLE IF NOT EXISTS users(
@@ -78,7 +95,7 @@ async def echo(message: types.Message):
 				)
 				""")	
 		now_time = datetime.datetime.now()
-		users_list = [UID, message.text, now, now_time.strftime("%H:%M:%S"), "Telegram", message.from_user.username, message.from_user.id]
+		users_list = [UID, message.text, today_date, now_time.strftime("%H:%M:%S"), "Telegram", message.from_user.username, message.from_user.id]
 		cursor.execute("INSERT INTO users VALUES(?,?,?,?,?,?,?);", users_list)
 		connect.commit()
 
