@@ -10,3 +10,4 @@ ujson
 cchardet
 aiodns
 aiohttp[speedups]
+aiofiles
