@@ -5,13 +5,13 @@ import copy
 
 def name_change(name):
 
-    morph = pmr.MorphAnalyzer(lang='ru')
-    maker = PetrovichDeclinationMaker()
-    full_name = name.split()
+    morph = pmr.MorphAnalyzer(lang='ru') # определение пола
+    maker = PetrovichDeclinationMaker()  # склонение ФИО
+    full_name = name.split()  # разбиение на составляющие
     print(name, full_name)
-    f_name = ''
-    s_name = ''
-    m_name = ''
+    first_name = ''
+    second_name = ''
+    middle_name = ''
     full_name_change = copy.deepcopy(full_name)
     for elem in full_name_change:
         is_name = any('Name' in p.tag for p in morph.parse(elem))

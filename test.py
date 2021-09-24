@@ -1,4 +1,4 @@
 from os import name
 from morphy_using import name_change
 
-print(name_change("Антон Иван"))
+print(name_change("Антон вапывпа"))
