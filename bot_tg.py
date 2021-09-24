@@ -19,6 +19,8 @@ from sqlite3.dbapi2 import Cursor
 
 from string import Template
 
+from morphy_using import name_change
+
 API_TOKEN = TOKEN
 
 # Configure logging
@@ -73,7 +75,8 @@ async def main_function(message: types.Message):
 		today_date += "-" + "{:02d}".format(datetime.date.today().month)
 		today_date += "-" + str(datetime.date.today().year)
 		UID = uuid.uuid4().hex #уникальный идентификатор для ID сертификата
-		file = PPTX_GENERATOR(message.text, UID, today_date)  # формирование pptx документа из шаблона (ФИО, ID, дата)
+		user_name = name_change(message.text)
+		file = PPTX_GENERATOR(user_name, UID, today_date)  # формирование pptx документа из шаблона (ФИО, ID, дата)
 		# file - ФИО+ID:  Кастрюлев Евлампий Спиридонович_ID 
 		file = file.replace(" ", "©")  # для передачи ФИО через аргументы командной строки, пробелы заменяются на спец.символы, чтобы ФИО было "единым целым"
 		command = "python PPTX_to_PDF.py " + file + " " + today_date  # формирование команды для запуска "отдельного" скрипта 
@@ -95,7 +98,7 @@ async def main_function(message: types.Message):
 				)
 				""")	
 		now_time = datetime.datetime.now()
-		users_list = [UID, message.text, today_date, now_time.strftime("%H:%M:%S"), "Telegram", message.from_user.username, message.from_user.id]
+		users_list = [UID, user_name, today_date, now_time.strftime("%H:%M:%S"), "Telegram", message.from_user.username, message.from_user.id]
 		cursor.execute("INSERT INTO users VALUES(?,?,?,?,?,?,?);", users_list)
 		connect.commit()
 

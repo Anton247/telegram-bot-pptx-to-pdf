@@ -9,60 +9,62 @@ def name_change(name):
     maker = PetrovichDeclinationMaker()  # склонение ФИО
     full_name = name.split()  # разбиение на составляющие
     print(name, full_name)
-    first_name = ''
-    second_name = ''
-    middle_name = ''
-    full_name_change = copy.deepcopy(full_name)
+    first_name = ''  # возможное имя
+    second_name = ''  # возможное фамилия
+    middle_name = ''  # возможное отчество
+    full_name_change = copy.deepcopy(full_name) 
     for elem in full_name_change:
         is_name = any('Name' in p.tag for p in morph.parse(elem))
         if is_name:
-            f_name = elem
+            first_name = elem
             full_name_change.remove(elem)
             break
     for elem in full_name_change:
         is_name = any('Surn' in p.tag for p in morph.parse(elem))
         if is_name:
-            s_name = elem
+            second_name = elem
             full_name_change.remove(elem)
             break
     for elem in full_name_change:
         is_name = any('Patr' in p.tag for p in morph.parse(elem))
         if is_name:
-            m_name = elem
+            middle_name = elem
             full_name_change.remove(elem)
             break
 
     if len(full_name_change) != 0:
-        full_name_change = ""
         for elem in full_name:
+            gender = ''
             if 'masc' in morph.parse(elem)[0].tag:
                 gender = Gender.MALE
-            else:
+            elif 'femn' in morph.parse(elem)[0].tag:
                 gender = Gender.FEMALE
             is_name = any('Name' in p.tag for p in morph.parse(elem))
-            is_mname = any('Patr' in p.tag for p in morph.parse(elem))
-            is_sname = any('Surn' in p.tag for p in morph.parse(elem))
-            if is_sname:
+            is_middle_name = any('Patr' in p.tag for p in morph.parse(elem))
+            is_sur_name = any('Surn' in p.tag for p in morph.parse(elem))
+            if is_sur_name:
                 cased_last_name = maker.make(NamePart.LASTNAME, gender, Case.DATIVE, elem)
                 full_name_change += ' ' + cased_last_name
             elif is_name:
                 cased_name = maker.make(NamePart.FIRSTNAME,gender, Case.DATIVE, elem)
                 full_name_change += ' ' + cased_name
-            elif is_mname:
+            elif is_middle_name:
                 cased_middle_name = maker.make(NamePart.MIDDLENAME, gender, Case.DATIVE, elem)
                 full_name_change += ' ' + cased_middle_name
         full_name_change = full_name_change.strip()
         print("Итог: ", full_name_change)
     else:
-        if 'masc' in morph.parse(f_name)[0].tag:
+        if 'masc' in morph.parse(first_name)[0].tag:
             gender = Gender.MALE
         else:
             gender = Gender.FEMALE
 
-        cased_last_name = maker.make(NamePart.LASTNAME, gender, Case.DATIVE, s_name)
-        cased_name = maker.make(NamePart.FIRSTNAME,gender, Case.DATIVE, f_name)
-        cased_middle_name = maker.make(NamePart.MIDDLENAME, gender, Case.DATIVE, m_name)
-        print("Итог: ", (cased_last_name + ' ' + cased_name + ' ' + cased_middle_name).strip())
+        cased_last_name = maker.make(NamePart.LASTNAME, gender, Case.DATIVE, second_name)
+        cased_name = maker.make(NamePart.FIRSTNAME,gender, Case.DATIVE, first_name)
+        cased_middle_name = maker.make(NamePart.MIDDLENAME, gender, Case.DATIVE, middle_name)
+        full_name_change = cased_last_name + ' ' + cased_name + ' ' + cased_middle_name
+    
+    return full_name_change
 
 
     
