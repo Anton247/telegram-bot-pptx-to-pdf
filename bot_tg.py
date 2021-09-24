@@ -21,6 +21,8 @@ from string import Template
 
 from morphy_using import name_change
 
+from asgiref.sync import sync_to_async
+
 API_TOKEN = TOKEN
 
 # Configure logging
@@ -76,11 +78,12 @@ async def main_function(message: types.Message):
 		today_date += "-" + str(datetime.date.today().year)
 		UID = uuid.uuid4().hex #уникальный идентификатор для ID сертификата
 		user_name = name_change(message.text)
-		file = PPTX_GENERATOR(user_name, UID, today_date)  # формирование pptx документа из шаблона (ФИО, ID, дата)
+
+		file = await sync_to_async(PPTX_GENERATOR)(user_name, UID, today_date)  # формирование pptx документа из шаблона (ФИО, ID, дата)
 		# file - ФИО+ID:  Кастрюлев Евлампий Спиридонович_ID 
 		file = file.replace(" ", "©")  # для передачи ФИО через аргументы командной строки, пробелы заменяются на спец.символы, чтобы ФИО было "единым целым"
 		command = "python PPTX_to_PDF.py " + file + " " + today_date  # формирование команды для запуска "отдельного" скрипта 
-		res = os.system(command)  # открываем скрипт для конвертации PPTX в PDF	
+		res = await sync_to_async(os.system)(command)  # открываем скрипт для конвертации PPTX в PDF	
 		file = file.replace("©", " ")  # возвращаем пробелы
 		doc = open('./GENERATED_PDF/' + today_date + '/' + file + ".pdf", 'rb')  # берём файл
 		await message.reply_document(doc)  # и отправляем его пользователю

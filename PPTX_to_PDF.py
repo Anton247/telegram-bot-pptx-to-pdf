@@ -4,6 +4,7 @@ import sys
 
 def init_powerpoint():
     powerpoint = comtypes.client.CreateObject("Powerpoint.Application")
+    powerpoint.UserControl = 0
     powerpoint.Visible = 1
     return powerpoint
  

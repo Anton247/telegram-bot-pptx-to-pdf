@@ -11,3 +11,4 @@ cchardet
 aiodns
 aiohttp[speedups]
 aiofiles
+asgiref
