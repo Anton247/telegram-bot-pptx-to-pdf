@@ -88,7 +88,7 @@ async def main_function(message: types.Message):
 		doc = open('./GENERATED_PDF/' + today_date + '/' + file + ".pdf", 'rb')  # берём файл
 		await message.reply_document(doc)  # и отправляем его пользователю
 		# работа с SQLLite
-		connect = sqlite3.connect('users.db')
+		connect = sqlite3.connect('../BD/users.db')
 		cursor = connect.cursor()
 		cursor.execute("""CREATE TABLE IF NOT EXISTS users(
 				user_id TEXT PRIMARY KEY,
@@ -106,4 +106,9 @@ async def main_function(message: types.Message):
 		connect.commit()
 
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+	while True:
+		try:
+			executor.start_polling(dp, skip_updates=True)
+		except Exception as e:
+			print(e)
+    

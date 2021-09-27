@@ -40,24 +40,17 @@ def name_change(name):
             gender = Gender.MALE
         elif 'femn' in morph.parse(first_name)[0].tag:
             gender = Gender.FEMALE
-        cased_first_name = maker.make(NamePart.FIRSTNAME,gender, Case.DATIVE, first_name)
+    
+    cased_first_name = maker.make(NamePart.FIRSTNAME,gender, Case.DATIVE, first_name)
         
-    if sur_name:
-        if 'masc' in morph.parse(sur_name)[0].tag:
-            gender = Gender.MALE
-        elif 'femn' in morph.parse(sur_name)[0].tag:
-            gender = Gender.FEMALE
-        cased_sur_name = maker.make(NamePart.FIRSTNAME,gender, Case.DATIVE, sur_name)
+    
+    cased_sur_name = maker.make(NamePart.LASTNAME, gender, Case.DATIVE, sur_name)
 
-    if patronymic:
-        if 'masc' in morph.parse(patronymic)[0].tag:
-            gender = Gender.MALE
-        elif 'femn' in morph.parse(patronymic)[0].tag:
-            gender = Gender.FEMALE
-        cased_patronymic = maker.make(NamePart.FIRSTNAME,gender, Case.DATIVE, patronymic)
+
+    cased_patronymic = maker.make(NamePart.MIDDLENAME, gender, Case.DATIVE, patronymic)
 
     print()
-    print(final_name)
+    print(cased_sur_name)
     print()
     if len(full_name_change) != 0:
         for elem in full_name:
@@ -70,6 +63,7 @@ def name_change(name):
             is_name = any('Name' in p.tag for p in morph.parse(elem))
             is_patronymic = any('Patr' in p.tag for p in morph.parse(elem))
             is_sur_name = any('Surn' in p.tag for p in morph.parse(elem))
+            print(gender)
             if is_sur_name:
                 cased_last_name = maker.make(NamePart.LASTNAME, gender, Case.DATIVE, elem)
                 final_name += ' ' + cased_last_name
